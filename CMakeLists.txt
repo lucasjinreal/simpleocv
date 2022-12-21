@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.8)
+project(simpleocv)
+
+option(BUILD_STATIC "enable to build static simpleocv lib" ON)
+option(DEBUG "Enable debug mode, for develop" ON)
+
+include(GNUInstallDirs)
+include_directories(${PROJECT_SOURCE_DIR}/include/)
+
+file(GLOB_RECURSE SRCS "src/*.cpp" "src/*.cc" "src/*.hpp")
+file(GLOB_RECURSE HEADERS "include/*.h" "include/*.hpp")
+
+if (BUILD_STATIC)
+    add_library(simpleocv STATIC ${SRCS} ${HEADERS})
+else()
+    add_library(simpleocv SHARED ${SRCS} ${HEADERS})
+endif()
+
+set_target_properties(
+    simpleocv
+    PROPERTIES
+    PUBLIC_HEADER "${HEADERS}")
+target_include_directories(simpleocv PRIVATE .)
+
+install(TARGETS simpleocv
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
