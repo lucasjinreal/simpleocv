@@ -44,6 +44,18 @@ int main(int argc, char **argv) {
 请注意！这里面没有用到任何opencv的代码。
 
 
+## 高端用法
+
+SimpleOCV 最有用的还是集成到你的项目里，你可以把simpleocv作为一个3rd依赖，也可以手动的把编译出来的`libsimpleocv.a` 拷贝到你的链接目录，然后带上一个单一的头文件 `simpleocv.h` 就行了。
+
+
+
+## 贡献
+
+欢迎老铁们PR一些你用simpleocv实现的东西，例如画图，画box、画keypoints等等，然后写到 `examples/demo_xx.cc` 给我PR。感谢你。
+
+
+
 ## 编译
 
 ```
