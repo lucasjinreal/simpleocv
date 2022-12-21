@@ -11,8 +11,9 @@ add_compile_definitions(NCNN_THREADS)
 
 include(GNUInstallDirs)
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
-file(GLOB_RECURSE SRCS "src/*.cpp" "src/*.cc" "src/*.hpp")
+file(GLOB_RECURSE SRCS "src/*.cpp" "src/*.cc" "src/*.hpp" "src/*.h")
 file(GLOB_RECURSE HEADERS "include/*.h" "include/*.hpp")
 
 if (BUILD_STATIC)

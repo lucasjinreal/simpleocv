@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ALLOCATOR_H_
+#define ALLOCATOR_H_
 
 #include "platform.h"
 #include <stdlib.h>
@@ -54,7 +55,7 @@ static inline void *fastMalloc(size_t size) {
 #endif
 }
 
-static inline void fastFree(void *ptr) {
+inline void fastFree(void *ptr) {
   if (ptr) {
 #if _MSC_VER
     _aligned_free(ptr);
@@ -75,7 +76,7 @@ static inline void fastFree(void *ptr) {
 // exchange-add operation for atomic operations on reference counters
 #if defined __riscv && !defined __riscv_atomic
 // riscv target without A extension
-static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+ NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;
@@ -111,14 +112,14 @@ static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   (int)_InterlockedExchangeAdd((long volatile *)addr, delta)
 #else
 // thread-unsafe branch
-static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+ NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;
 }
 #endif
 #else  // NCNN_THREADS
-static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;
@@ -189,3 +190,5 @@ private:
 };
 
 } // namespace ncnn
+
+#endif

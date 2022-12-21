@@ -5,7 +5,6 @@
 #include "platform.h"
 
 #if 1
-#include "allocator.h"
 #include <limits.h>
 #include <string.h>
 
@@ -14,10 +13,6 @@
 #pragma push_macro("max")
 #undef min
 #undef max
-#endif
-
-#ifndef NCNN_XADD
-using ncnn::NCNN_XADD;
 #endif
 
 typedef unsigned char uchar;
@@ -31,6 +26,22 @@ enum {
 };
 
 enum { CV_IMWRITE_JPEG_QUALITY = 1 };
+
+namespace ncnn {
+
+NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+  int tmp = *addr;
+  *addr += delta;
+  return tmp;
+};
+static inline void *fastMalloc(size_t size);
+inline void fastFree(void *ptr);
+
+} // namespace ncnn
+
+#ifndef NCNN_XADD
+using ncnn::NCNN_XADD;
+#endif
 
 // minimal opencv style data structure implementation
 namespace cv {
