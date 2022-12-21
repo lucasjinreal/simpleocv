@@ -1,5 +1,6 @@
 #pragma once
 
+#include "platform.h"
 #include <stdlib.h>
 
 namespace ncnn {
@@ -69,5 +70,122 @@ static inline void fastFree(void *ptr) {
 #endif
   }
 }
+
+#if NCNN_THREADS
+// exchange-add operation for atomic operations on reference counters
+#if defined __riscv && !defined __riscv_atomic
+// riscv target without A extension
+static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+  int tmp = *addr;
+  *addr += delta;
+  return tmp;
+}
+#elif defined __INTEL_COMPILER && !(defined WIN32 || defined _WIN32)
+// atomic increment on the linux version of the Intel(tm) compiler
+#define NCNN_XADD(addr, delta)                                                 \
+  (int)_InterlockedExchangeAdd(                                                \
+      const_cast<void *>(reinterpret_cast<volatile void *>(addr)), delta)
+#elif defined __GNUC__
+#if defined __clang__ && __clang_major__ >= 3 && !defined __ANDROID__ &&       \
+    !defined __EMSCRIPTEN__ && !defined(__CUDACC__)
+#ifdef __ATOMIC_ACQ_REL
+#define NCNN_XADD(addr, delta)                                                 \
+  __c11_atomic_fetch_add((_Atomic(int) *)(addr), delta, __ATOMIC_ACQ_REL)
+#else
+#define NCNN_XADD(addr, delta)                                                 \
+  __atomic_fetch_add((_Atomic(int) *)(addr), delta, 4)
+#endif
+#else
+#if defined __ATOMIC_ACQ_REL && !defined __clang__
+// version for gcc >= 4.7
+#define NCNN_XADD(addr, delta)                                                 \
+  (int)__atomic_fetch_add((unsigned *)(addr), (unsigned)(delta),               \
+                          __ATOMIC_ACQ_REL)
+#else
+#define NCNN_XADD(addr, delta)                                                 \
+  (int)__sync_fetch_and_add((unsigned *)(addr), (unsigned)(delta))
+#endif
+#endif
+#elif defined _MSC_VER && !defined RC_INVOKED
+#define NCNN_XADD(addr, delta)                                                 \
+  (int)_InterlockedExchangeAdd((long volatile *)addr, delta)
+#else
+// thread-unsafe branch
+static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+  int tmp = *addr;
+  *addr += delta;
+  return tmp;
+}
+#endif
+#else  // NCNN_THREADS
+static NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+  int tmp = *addr;
+  *addr += delta;
+  return tmp;
+}
+#endif // NCNN_THREADS
+
+class NCNN_EXPORT Allocator {
+public:
+  virtual ~Allocator();
+  virtual void *fastMalloc(size_t size) = 0;
+  virtual void fastFree(void *ptr) = 0;
+};
+
+class PoolAllocatorPrivate;
+class NCNN_EXPORT PoolAllocator : public Allocator {
+public:
+  PoolAllocator();
+  ~PoolAllocator();
+
+  // ratio range 0 ~ 1
+  // default cr = 0
+  void set_size_compare_ratio(float scr);
+
+  // budget drop threshold
+  // default threshold = 10
+  void set_size_drop_threshold(size_t);
+
+  // release all budgets immediately
+  void clear();
+
+  virtual void *fastMalloc(size_t size);
+  virtual void fastFree(void *ptr);
+
+private:
+  PoolAllocator(const PoolAllocator &);
+  PoolAllocator &operator=(const PoolAllocator &);
+
+private:
+  PoolAllocatorPrivate *const d;
+};
+
+class UnlockedPoolAllocatorPrivate;
+class NCNN_EXPORT UnlockedPoolAllocator : public Allocator {
+public:
+  UnlockedPoolAllocator();
+  ~UnlockedPoolAllocator();
+
+  // ratio range 0 ~ 1
+  // default cr = 0
+  void set_size_compare_ratio(float scr);
+
+  // budget drop threshold
+  // default threshold = 10
+  void set_size_drop_threshold(size_t);
+
+  // release all budgets immediately
+  void clear();
+
+  virtual void *fastMalloc(size_t size);
+  virtual void fastFree(void *ptr);
+
+private:
+  UnlockedPoolAllocator(const UnlockedPoolAllocator &);
+  UnlockedPoolAllocator &operator=(const UnlockedPoolAllocator &);
+
+private:
+  UnlockedPoolAllocatorPrivate *const d;
+};
 
 } // namespace ncnn

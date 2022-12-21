@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.8)
 project(simpleocv)
 
+set(CMAKE_CXX_STANDARD 11)
+
 option(BUILD_STATIC "enable to build static simpleocv lib" ON)
 option(DEBUG "Enable debug mode, for develop" ON)
 
+add_compile_definitions(NCNN_PIXEL)
+add_compile_definitions(NCNN_THREADS)
+
 include(GNUInstallDirs)
-include_directories(${PROJECT_SOURCE_DIR}/include/)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE SRCS "src/*.cpp" "src/*.cc" "src/*.hpp")
 file(GLOB_RECURSE HEADERS "include/*.h" "include/*.hpp")
