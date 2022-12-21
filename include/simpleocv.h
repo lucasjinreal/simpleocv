@@ -2,11 +2,10 @@
 #ifndef NCNN_SIMPLEOCV_H
 #define NCNN_SIMPLEOCV_H
 
-#include "platform.h"
-
-#if 1
 #include <limits.h>
 #include <string.h>
+#include <string>
+#include <vector>
 
 #if defined(_MSC_VER) || defined(__GNUC__)
 #pragma push_macro("min")
@@ -26,6 +25,33 @@ enum {
 };
 
 enum { CV_IMWRITE_JPEG_QUALITY = 1 };
+
+
+#ifndef NCNN_EXPORT
+#define NCNN_EXPORT
+#endif
+
+#ifndef NCNN_NO_EXPORT
+#define NCNN_NO_EXPORT
+#endif
+
+#if NCNN_FORCE_INLINE
+#ifdef _MSC_VER
+#define NCNN_FORCEINLINE __forceinline
+#elif defined(__GNUC__)
+#define NCNN_FORCEINLINE inline __attribute__((__always_inline__))
+#elif defined(__CLANG__)
+#if __has_attribute(__always_inline__)
+#define NCNN_FORCEINLINE inline __attribute__((__always_inline__))
+#else
+#define NCNN_FORCEINLINE inline
+#endif
+#else
+#define NCNN_FORCEINLINE inline
+#endif
+#else
+#define NCNN_FORCEINLINE inline
+#endif
 
 namespace ncnn {
 
@@ -346,12 +372,8 @@ NCNN_EXPORT void imshow(const std::string &name, const Mat &m);
 
 NCNN_EXPORT int waitKey(int delay = 0);
 
-#if NCNN_PIXEL
 NCNN_EXPORT void resize(const Mat &src, Mat &dst, const Size &size,
                         float sw = 0.f, float sh = 0.f, int flags = 0);
-#endif // NCNN_PIXEL
-
-#if NCNN_PIXEL_DRAWING
 
 enum { FILLED = -1 };
 
@@ -376,15 +398,11 @@ NCNN_EXPORT void putText(Mat &img, const std::string &text, Point org,
 NCNN_EXPORT Size getTextSize(const std::string &text, int fontFace,
                              double fontScale, int thickness, int *baseLine);
 
-#endif // NCNN_PIXEL_DRAWING
-
 } // namespace cv
 
 #if defined(_MSC_VER) || defined(__GNUC__)
 #pragma pop_macro("min")
 #pragma pop_macro("max")
 #endif
-
-#endif // NCNN_SIMPLEOCV
 
 #endif // NCNN_SIMPLEOCV_H

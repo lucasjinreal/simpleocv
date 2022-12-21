@@ -17,7 +17,6 @@
 
 #include "simpleocv.h"
 
-#if 1
 #include "mat.h"
 #include <stdio.h>
 
@@ -187,7 +186,6 @@ int waitKey(int delay) {
   return -1;
 }
 
-#if NCNN_PIXEL
 void resize(const Mat &src, Mat &dst, const Size &size, float sw, float sh,
             int flags) {
   (void)flags;
@@ -224,9 +222,6 @@ void resize(const Mat &src, Mat &dst, const Size &size, float sw, float sh,
 
   dst = tmp;
 }
-#endif // NCNN_PIXEL
-
-#if NCNN_PIXEL_DRAWING
 
 void rectangle(Mat &img, Point pt1, Point pt2, const Scalar &color,
                int thickness) {
@@ -351,8 +346,4 @@ Size getTextSize(const std::string &text, int fontFace, double fontScale,
   return Size(w, h);
 }
 
-#endif // NCNN_PIXEL_DRAWING
-
 } // namespace cv
-
-#endif // NCNN_SIMPLEOCV
