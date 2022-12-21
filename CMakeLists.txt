@@ -27,6 +27,8 @@ set_target_properties(
     PUBLIC_HEADER "${HEADERS}")
 target_include_directories(simpleocv PRIVATE .)
 
+add_subdirectory(examples/)
+
 install(TARGETS simpleocv
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

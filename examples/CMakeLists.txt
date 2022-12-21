@@ -1,0 +1,2 @@
+add_executable(demo_color demo_color.cc)
+target_link_libraries(demo_color simpleocv)

@@ -18,7 +18,7 @@
 #include "simpleocv.h"
 
 #if 1
-
+#include "mat.h"
 #include <stdio.h>
 
 #define STB_IMAGE_IMPLEMENTATION
