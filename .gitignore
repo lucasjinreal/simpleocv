@@ -7,3 +7,4 @@ build/
 cmake-build-debug/
 vendor/
 vendor/
+.DS_Store

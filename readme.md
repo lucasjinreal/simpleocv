@@ -61,5 +61,7 @@ make -j8
 
 
 
+## Copyright
 
+lucasjin && ncnn reserved.
 
