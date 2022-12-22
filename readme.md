@@ -43,6 +43,10 @@ int main(int argc, char **argv) {
 
 请注意！这里面没有用到任何opencv的代码。
 
+这是一个实际调用simpleocv的上层应用的效果；
+
+![图片.png](https://s2.loli.net/2022/12/22/sMY7iRP4mJGNQKC.png)
+
 
 ## 高端用法
 
