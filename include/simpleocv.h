@@ -26,6 +26,12 @@ enum {
 
 enum { CV_IMWRITE_JPEG_QUALITY = 1 };
 
+#ifndef CV_PI
+#define CV_PI 3.1415926535897932384626433832795
+#endif
+#ifndef CV_LOG2
+#define CV_LOG2 0.69314718055994530941723212145818
+#endif
 
 #ifndef NCNN_EXPORT
 #define NCNN_EXPORT
@@ -92,17 +98,29 @@ template <typename _Tp> struct Scalar_ {
     v[2] = 0;
     v[3] = 0;
   }
+  Scalar_(_Tp _v0, _Tp _v1) {
+    v[0] = _v0;
+    v[1] = _v1;
+    v[2] = 0;
+    v[3] = 0;
+    width = v[0];
+    height = v[1];
+  }
   Scalar_(_Tp _v0, _Tp _v1, _Tp _v2) {
     v[0] = _v0;
     v[1] = _v1;
     v[2] = _v2;
     v[3] = 0;
+    width = v[0];
+    height = v[1];
   }
   Scalar_(_Tp _v0, _Tp _v1, _Tp _v2, _Tp _v3) {
     v[0] = _v0;
     v[1] = _v1;
     v[2] = _v2;
     v[3] = _v3;
+    width = v[0];
+    height = v[1];
   }
 
   const _Tp operator[](const int i) const { return v[i]; }
@@ -110,6 +128,9 @@ template <typename _Tp> struct Scalar_ {
   _Tp operator[](const int i) { return v[i]; }
 
   _Tp v[4];
+
+  int width = v[0];
+  int height = v[1];
 };
 
 typedef Scalar_<uchar> Scalar;
@@ -120,6 +141,12 @@ template <typename _Tp> struct Point_ {
 
   template <typename _Tp2> operator Point_<_Tp2>() const {
     return Point_<_Tp2>(saturate_cast<_Tp2>(x), saturate_cast<_Tp2>(y));
+  }
+
+  bool operator==(const Point_ &b) { return x == b.x && y == b.y; }
+  bool operator!=(const Point_ &b) { return x != b.x || y != b.y; }
+  Point_<_Tp> operator-(const Point_<_Tp> &b) {
+    return Point_<_Tp>(x - b.x, y - b.y);
   }
 
   _Tp x;
@@ -205,6 +232,7 @@ typedef Rect_<float> Rect2f;
 #define CV_8UC3 3
 #define CV_8UC4 4
 #define CV_32FC1 4
+#define CV_64F 5
 
 struct NCNN_EXPORT Mat {
   Mat() : data(0), refcount(0), rows(0), cols(0), c(0) {}
@@ -265,6 +293,14 @@ struct NCNN_EXPORT Mat {
     return *this;
   }
 
+  static inline cv::Mat zeros(const Mat &m, int type = CV_8UC3) {
+    return Mat(m.rows, m.cols, m.c);
+  }
+
+  static inline cv::Mat zeros(const cv::Scalar &s, int type = CV_8UC3) {
+    return Mat(s[0], s[1], s[2]);
+  }
+
   void create(int _rows, int _cols, int flags) {
     release();
 
@@ -310,6 +346,7 @@ struct NCNN_EXPORT Mat {
   bool empty() const { return data == 0 || total() == 0; }
 
   int channels() const { return c; }
+  cv::Scalar size() const { return cv::Scalar(cols, rows, c); }
 
   int type() const { return c; }
 
@@ -378,8 +415,7 @@ NCNN_EXPORT void resize(const Mat &src, Mat &dst, const Size &size,
 enum { FILLED = -1 };
 
 NCNN_EXPORT void rectangle(Mat &img, Point pt1, Point pt2, const Scalar &color,
-                           int thickness = 1);
-
+                           int thickness = 1, int lineType = 8, int shift = 0);
 NCNN_EXPORT void rectangle(Mat &img, Rect rec, const Scalar &color,
                            int thickness = 1);
 
@@ -390,6 +426,7 @@ NCNN_EXPORT void line(Mat &img, Point p0, Point p1, const Scalar &color,
                       int thickness = 1);
 
 enum { FONT_HERSHEY_SIMPLEX = 0 };
+enum { LINE_AA = 8 };
 
 NCNN_EXPORT void putText(Mat &img, const std::string &text, Point org,
                          int fontFace, double fontScale, Scalar color,
