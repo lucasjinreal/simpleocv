@@ -224,7 +224,7 @@ void resize(const Mat &src, Mat &dst, const Size &size, float sw, float sh,
 }
 
 void rectangle(Mat &img, Point pt1, Point pt2, const Scalar &color,
-               int thickness) {
+               int thickness, int lineType, int shift) {
   Rect rec;
   rec.x = std::min(pt1.x, pt2.x);
   rec.y = std::min(pt1.y, pt2.y);

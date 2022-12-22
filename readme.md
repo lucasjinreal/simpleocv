@@ -14,12 +14,12 @@ SimpleOCV尽可能秉承以下几个原则：
 - 跨平台：浏览器都能跑，还有什么不能跑；
 - 方便集成：任何C++项目都能集成
 
-目的就是：对于不是很复杂的项目，彻底抛弃OpenCV，但是对于已有的项目，SimpleOCV的include接口，保持和OpenCV一模一样。o
+目的就是：对于不是很复杂的项目，彻底抛弃OpenCV，但是对于已有的项目，SimpleOCV的include接口，保持和OpenCV一模一样。
 
 
 ## 用法
 
-你不需要opencv，只需要这样：
+**你不需要opencv，只需要这样：**
 
 ```c++
 #include "simpleocv.h"
@@ -70,6 +70,26 @@ make -j8
 
 ./examples/demo_color bus.jpg
 ```
+
+## 增设
+
+相较于ncnn里面的版本，我做了些许的修改，记录如下：
+
+- 增加了`CV_PI, CV_F64C1` 等全局宏定义；
+- 增加了 `cv::Point` 对于 `-, ==, -=, !=`等操作符的复写；
+- 增加了 `cv::Mat, cv::Scalar` 等更贴近opencv的构造函数；
+- 将simpleocv的功能进行了约简，不依赖于ncnn，一个头文件就可以调用；
+- 增加了 `cv::Mat::zeros` 等初始化空白Mat函数；
+- 增加了 `cv::LINE_AA` 等宏；
+
+
+## 计划
+
+有些许的函数，其实可以添加进来的，这样可以让这个微型的替代版本更加鲁棒，感兴趣的可以PR：
+
+- [ ] `cv::copyMarkBorder` 函数引入；
+- [ ] `cv::polyLines` 函数引入；
+
 
 ## 后续
 
