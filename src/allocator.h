@@ -31,7 +31,7 @@ static inline _Tp *alignPtr(_Tp *ptr, int n = (int)sizeof(_Tp)) {
 // of two
 static inline size_t alignSize(size_t sz, int n) { return (sz + n - 1) & -n; }
 
-static inline void *fastMalloc(size_t size) {
+inline void *fastMalloc(size_t size) {
 #if _MSC_VER
   return _aligned_malloc(size, NCNN_MALLOC_ALIGN);
 #elif (defined(__unix__) || defined(__APPLE__)) &&                             \
@@ -76,7 +76,7 @@ inline void fastFree(void *ptr) {
 // exchange-add operation for atomic operations on reference counters
 #if defined __riscv && !defined __riscv_atomic
 // riscv target without A extension
- NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;
@@ -112,7 +112,7 @@ inline void fastFree(void *ptr) {
   (int)_InterlockedExchangeAdd((long volatile *)addr, delta)
 #else
 // thread-unsafe branch
- NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
+NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;

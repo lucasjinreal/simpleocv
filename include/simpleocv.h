@@ -41,7 +41,7 @@ enum { CV_IMWRITE_JPEG_QUALITY = 1 };
 #define NCNN_NO_EXPORT
 #endif
 
-#if NCNN_FORCE_INLINE
+#ifndef NCNN_FORCE_INLINE
 #ifdef _MSC_VER
 #define NCNN_FORCEINLINE __forceinline
 #elif defined(__GNUC__)
@@ -66,7 +66,7 @@ NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   *addr += delta;
   return tmp;
 };
-static inline void *fastMalloc(size_t size);
+ inline void *fastMalloc(size_t size);
 inline void fastFree(void *ptr);
 
 } // namespace ncnn
