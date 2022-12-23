@@ -18,7 +18,7 @@
 
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PIXEL_DRAWING
 

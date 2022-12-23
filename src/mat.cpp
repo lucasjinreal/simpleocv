@@ -34,7 +34,7 @@
 #endif // NCNN_PLATFORM_API
 #endif // NCNN_VULKAN
 
-namespace ncnn {
+namespace sim {
 
 Mat Mat::clone(Allocator *_allocator) const {
   if (empty())
@@ -65,7 +65,7 @@ Mat Mat::clone(Allocator *_allocator) const {
   return m;
 }
 
-void Mat::clone_from(const ncnn::Mat &mat, Allocator *allocator) {
+void Mat::clone_from(const sim::Mat &mat, Allocator *allocator) {
   *this = mat.clone(allocator);
 }
 

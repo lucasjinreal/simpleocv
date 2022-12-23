@@ -30,7 +30,7 @@
 
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 class NCNN_EXPORT CpuSet {
 public:

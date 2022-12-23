@@ -20,7 +20,7 @@
 #include <math.h>
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PIXEL_AFFINE
 void get_rotation_matrix(float angle, float scale, float dx, float dy, float* tm)

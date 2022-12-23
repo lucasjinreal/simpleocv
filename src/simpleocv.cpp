@@ -31,6 +31,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
+
 namespace cv {
 
 Mat imread(const std::string &path, int flags) {
@@ -214,11 +215,11 @@ void resize(const Mat &src, Mat &dst, const Size &size, float sw, float sh,
     return;
 
   if (src.c == 1)
-    ncnn::resize_bilinear_c1(src.data, srcw, srch, tmp.data, w, h);
+    sim::resize_bilinear_c1(src.data, srcw, srch, tmp.data, w, h);
   else if (src.c == 3)
-    ncnn::resize_bilinear_c3(src.data, srcw, srch, tmp.data, w, h);
+    sim::resize_bilinear_c3(src.data, srcw, srch, tmp.data, w, h);
   else if (src.c == 4)
-    ncnn::resize_bilinear_c4(src.data, srcw, srch, tmp.data, w, h);
+    sim::resize_bilinear_c4(src.data, srcw, srch, tmp.data, w, h);
 
   dst = tmp;
 }
@@ -239,20 +240,20 @@ void rectangle(Mat &img, Rect rec, const Scalar &_color, int thickness) {
 
   if (img.c == 1) {
     border_color[0] = _color[0];
-    ncnn::draw_rectangle_c1(img.data, img.cols, img.rows, rec.x, rec.y,
+    sim::draw_rectangle_c1(img.data, img.cols, img.rows, rec.x, rec.y,
                             rec.width, rec.height, color, thickness);
   } else if (img.c == 3) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
-    ncnn::draw_rectangle_c3(img.data, img.cols, img.rows, rec.x, rec.y,
+    sim::draw_rectangle_c3(img.data, img.cols, img.rows, rec.x, rec.y,
                             rec.width, rec.height, color, thickness);
   } else if (img.c == 4) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
     border_color[3] = _color[3];
-    ncnn::draw_rectangle_c4(img.data, img.cols, img.rows, rec.x, rec.y,
+    sim::draw_rectangle_c4(img.data, img.cols, img.rows, rec.x, rec.y,
                             rec.width, rec.height, color, thickness);
   }
 }
@@ -264,20 +265,20 @@ void circle(Mat &img, Point center, int radius, const Scalar &_color,
 
   if (img.c == 1) {
     border_color[0] = _color[0];
-    ncnn::draw_circle_c1(img.data, img.cols, img.rows, center.x, center.y,
+    sim::draw_circle_c1(img.data, img.cols, img.rows, center.x, center.y,
                          radius, color, thickness);
   } else if (img.c == 3) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
-    ncnn::draw_circle_c3(img.data, img.cols, img.rows, center.x, center.y,
+    sim::draw_circle_c3(img.data, img.cols, img.rows, center.x, center.y,
                          radius, color, thickness);
   } else if (img.c == 4) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
     border_color[3] = _color[3];
-    ncnn::draw_circle_c4(img.data, img.cols, img.rows, center.x, center.y,
+    sim::draw_circle_c4(img.data, img.cols, img.rows, center.x, center.y,
                          radius, color, thickness);
   }
 }
@@ -288,20 +289,20 @@ void line(Mat &img, Point p0, Point p1, const Scalar &_color, int thickness) {
 
   if (img.c == 1) {
     border_color[0] = _color[0];
-    ncnn::draw_line_c1(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
+    sim::draw_line_c1(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
                        color, thickness);
   } else if (img.c == 3) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
-    ncnn::draw_line_c3(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
+    sim::draw_line_c3(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
                        color, thickness);
   } else if (img.c == 4) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
     border_color[3] = _color[3];
-    ncnn::draw_line_c4(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
+    sim::draw_line_c4(img.data, img.cols, img.rows, p0.x, p0.y, p1.x, p1.y,
                        color, thickness);
   }
 }
@@ -315,20 +316,20 @@ void putText(Mat &img, const std::string &text, Point org, int fontFace,
 
   if (img.c == 1) {
     border_color[0] = _color[0];
-    ncnn::draw_text_c1(img.data, img.cols, img.rows, text.c_str(), org.x,
+    sim::draw_text_c1(img.data, img.cols, img.rows, text.c_str(), org.x,
                        org.y - fontpixelsize * 2, fontpixelsize, color);
   } else if (img.c == 3) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
-    ncnn::draw_text_c3(img.data, img.cols, img.rows, text.c_str(), org.x,
+    sim::draw_text_c3(img.data, img.cols, img.rows, text.c_str(), org.x,
                        org.y - fontpixelsize * 2, fontpixelsize, color);
   } else if (img.c == 4) {
     border_color[0] = _color[0];
     border_color[1] = _color[1];
     border_color[2] = _color[2];
     border_color[3] = _color[3];
-    ncnn::draw_text_c4(img.data, img.cols, img.rows, text.c_str(), org.x,
+    sim::draw_text_c4(img.data, img.cols, img.rows, text.c_str(), org.x,
                        org.y - fontpixelsize * 2, fontpixelsize, color);
   }
 }
@@ -339,7 +340,7 @@ Size getTextSize(const std::string &text, int fontFace, double fontScale,
 
   int w;
   int h;
-  ncnn::get_text_drawing_size(text.c_str(), fontpixelsize, &w, &h);
+  sim::get_text_drawing_size(text.c_str(), fontpixelsize, &w, &h);
 
   *baseLine = 0;
 

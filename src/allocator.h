@@ -4,7 +4,7 @@
 #include "platform.h"
 #include <stdlib.h>
 
-namespace ncnn {
+namespace sim {
 
 // the alignment of all the allocated buffers
 #if NCNN_AVX512

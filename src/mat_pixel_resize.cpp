@@ -21,7 +21,7 @@
 #endif // __ARM_NEON
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PIXEL
 void resize_bilinear_c1(const unsigned char* src, int srcw, int srch, unsigned char* dst, int w, int h)

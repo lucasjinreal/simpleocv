@@ -56,7 +56,7 @@
 #endif // NCNN_PLATFORM_API
 #endif // NCNN_PIXEL
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_VULKAN
 class VkMat;
@@ -162,7 +162,7 @@ public:
   // deep copy
   Mat clone(Allocator *allocator = 0) const;
   // deep copy from other mat, inplace
-  void clone_from(const ncnn::Mat &mat, Allocator *allocator = 0);
+  void clone_from(const sim::Mat &mat, Allocator *allocator = 0);
   // reshape vec
   Mat reshape(int w, Allocator *allocator = 0) const;
   // reshape image

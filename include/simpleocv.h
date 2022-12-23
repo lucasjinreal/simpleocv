@@ -1,6 +1,6 @@
 
-#ifndef NCNN_SIMPLEOCV_H
-#define NCNN_SIMPLEOCV_H
+#ifndef _SIMPLEOCV_H
+#define _SIMPLEOCV_H
 
 #include <limits.h>
 #include <string.h>
@@ -59,20 +59,20 @@ enum { CV_IMWRITE_JPEG_QUALITY = 1 };
 #define NCNN_FORCEINLINE inline
 #endif
 
-namespace ncnn {
+namespace sim {
 
 NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
   int tmp = *addr;
   *addr += delta;
   return tmp;
 };
- inline void *fastMalloc(size_t size);
+inline void *fastMalloc(size_t size);
 inline void fastFree(void *ptr);
 
 } // namespace ncnn
 
 #ifndef NCNN_XADD
-using ncnn::NCNN_XADD;
+using sim::NCNN_XADD;
 #endif
 
 // minimal opencv style data structure implementation
@@ -311,7 +311,7 @@ struct NCNN_EXPORT Mat {
     if (total() > 0) {
       // refcount address must be aligned, so we expand totalsize here
       size_t totalsize = (total() + 3) >> 2 << 2;
-      data = (uchar *)ncnn::fastMalloc(totalsize + (int)sizeof(*refcount));
+      data = (uchar *)sim::fastMalloc(totalsize + (int)sizeof(*refcount));
       refcount = (int *)(((uchar *)data) + totalsize);
       *refcount = 1;
     }
@@ -319,7 +319,7 @@ struct NCNN_EXPORT Mat {
 
   void release() {
     if (refcount && NCNN_XADD(refcount, -1) == 1)
-      ncnn::fastFree(data);
+      sim::fastFree(data);
 
     data = 0;
 

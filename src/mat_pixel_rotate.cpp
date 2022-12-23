@@ -18,7 +18,7 @@
 #endif // __ARM_NEON
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PIXEL_ROTATE
 // should be a kanna ascii art here in my local branch

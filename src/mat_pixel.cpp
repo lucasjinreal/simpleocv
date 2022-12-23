@@ -21,7 +21,7 @@
 #endif // __ARM_NEON
 #include "platform.h"
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PIXEL
 static int from_rgb(const unsigned char* rgb, int w, int h, int stride, Mat& m, Allocator* allocator)

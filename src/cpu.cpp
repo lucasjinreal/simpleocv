@@ -116,7 +116,7 @@
 #include <immintrin.h>
 #endif
 
-namespace ncnn {
+namespace sim {
 
 #if defined __ANDROID__ || defined __linux__
 
@@ -1795,7 +1795,7 @@ void set_kmp_blocktime(int time_ms) {
 #endif
 }
 
-static ncnn::ThreadLocalStorage tls_flush_denormals;
+static sim::ThreadLocalStorage tls_flush_denormals;
 
 int get_flush_denormals() {
 #if defined(__SSE3__)

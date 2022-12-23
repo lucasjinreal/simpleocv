@@ -1,6 +1,9 @@
 #include "./allocator.h"
 
-namespace ncnn {
+namespace sim {
+
+using sim::fastFree;
+using sim::fastMalloc;
 
 Allocator::~Allocator() {}
 
@@ -46,7 +49,7 @@ void PoolAllocator::clear() {
   std::list<std::pair<size_t, void *>>::iterator it = d->budgets.begin();
   for (; it != d->budgets.end(); ++it) {
     void *ptr = it->second;
-    ncnn::fastFree(ptr);
+    fastFree(ptr);
   }
   d->budgets.clear();
 
@@ -107,12 +110,12 @@ void *PoolAllocator::fastMalloc(size_t size) {
     if (it_max->first < size) {
       // Current query is asking for a chunk larger than any cached chunks.
       // Then remove the smallest one.
-      ncnn::fastFree(it_min->second);
+      fastFree(it_min->second);
       d->budgets.erase(it_min);
     } else if (it_min->first > size) {
       // Current query is asking for a chunk smaller than any cached chunks.
       // Then remove the largest one.
-      ncnn::fastFree(it_max->second);
+      fastFree(it_max->second);
       d->budgets.erase(it_max);
     }
   }
@@ -120,7 +123,7 @@ void *PoolAllocator::fastMalloc(size_t size) {
   d->budgets_lock.unlock();
 
   // new
-  void *ptr = ncnn::fastMalloc(size);
+  void *ptr = fastMalloc(size);
 
   d->payouts_lock.lock();
 
@@ -157,7 +160,7 @@ void PoolAllocator::fastFree(void *ptr) {
   d->payouts_lock.unlock();
 
   NCNN_LOGE("FATAL ERROR! pool allocator get wild %p", ptr);
-  ncnn::fastFree(ptr);
+  fastFree(ptr);
 }
 
 class UnlockedPoolAllocatorPrivate {
@@ -203,7 +206,7 @@ void UnlockedPoolAllocator::clear() {
   std::list<std::pair<size_t, void *>>::iterator it = d->budgets.begin();
   for (; it != d->budgets.end(); ++it) {
     void *ptr = it->second;
-    ncnn::fastFree(ptr);
+    fastFree(ptr);
   }
   d->budgets.clear();
 }
@@ -250,16 +253,16 @@ void *UnlockedPoolAllocator::fastMalloc(size_t size) {
 
   if (d->budgets.size() >= d->size_drop_threshold) {
     if (it_max->first < size) {
-      ncnn::fastFree(it_min->second);
+      fastFree(it_min->second);
       d->budgets.erase(it_min);
     } else if (it_min->first > size) {
-      ncnn::fastFree(it_max->second);
+      fastFree(it_max->second);
       d->budgets.erase(it_max);
     }
   }
 
   // new
-  void *ptr = ncnn::fastMalloc(size);
+  void *ptr = fastMalloc(size);
 
   d->payouts.push_back(std::make_pair(size, ptr));
 
@@ -282,7 +285,7 @@ void UnlockedPoolAllocator::fastFree(void *ptr) {
   }
 
   NCNN_LOGE("FATAL ERROR! unlocked pool allocator get wild %p", ptr);
-  ncnn::fastFree(ptr);
+  fastFree(ptr);
 }
 
-} // namespace ncnn
+} // namespace sim

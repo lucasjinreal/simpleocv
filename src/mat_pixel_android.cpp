@@ -23,7 +23,7 @@
 #endif // __ANDROID_API__ >= 9
 #endif // NCNN_PLATFORM_API
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_PLATFORM_API
 #if __ANDROID_API__ >= 9

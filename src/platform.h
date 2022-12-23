@@ -120,7 +120,7 @@
 #define VK_USE_PLATFORM_ANDROID_KHR
 #endif // __ANDROID_API__ >= 26
 
-namespace ncnn {
+namespace sim {
 
 #if NCNN_THREADS
 #if (defined _WIN32 && !(defined __MINGW32__))
