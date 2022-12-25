@@ -69,7 +69,7 @@ NCNN_FORCEINLINE int NCNN_XADD(int *addr, int delta) {
 inline void *fastMalloc(size_t size);
 inline void fastFree(void *ptr);
 
-} // namespace ncnn
+} // namespace sim
 
 #ifndef NCNN_XADD
 using sim::NCNN_XADD;
@@ -124,8 +124,8 @@ template <typename _Tp> struct Scalar_ {
   }
 
   const _Tp operator[](const int i) const { return v[i]; }
-
-  _Tp operator[](const int i) { return v[i]; }
+  // void operator[](const int i) {}
+  _Tp &operator[](const int i) { return v[i]; }
 
   _Tp v[4];
 
