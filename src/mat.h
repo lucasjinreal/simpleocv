@@ -56,6 +56,10 @@
 #endif // NCNN_PLATFORM_API
 #endif // NCNN_PIXEL
 
+#if _MSC_VER
+#define NOMINMAX
+#endif
+
 namespace sim {
 
 #if NCNN_VULKAN

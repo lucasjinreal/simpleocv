@@ -55,7 +55,7 @@ inline void *fastMalloc(size_t size) {
 #endif
 }
 
-inline void fastFree(void *ptr) {
+extern inline void fastFree(void *ptr) {
   if (ptr) {
 #if _MSC_VER
     _aligned_free(ptr);

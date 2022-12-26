@@ -17,6 +17,11 @@ SimpleOCV尽可能秉承以下几个原则：
 目的就是：对于不是很复杂的项目，彻底抛弃OpenCV，但是对于已有的项目，SimpleOCV的include接口，保持和OpenCV一模一样。
 
 
+## 更新
+
+- *`2022.12.26`*: 我增加了windows下的编译支持，现在可以直接编译一个windows .lib 静态库了，MSVC没有问题，这样你在大部分软件里面都可以直接集成，比opencv编译容易很多；
+
+
 ## 用法
 
 **你不需要opencv，只需要这样：**
@@ -51,6 +56,15 @@ int main(int argc, char **argv) {
 ## 高端用法
 
 SimpleOCV 最有用的还是集成到你的项目里，你可以把simpleocv作为一个3rd依赖，也可以手动的把编译出来的`libsimpleocv.a` 拷贝到你的链接目录，然后带上一个单一的头文件 `simpleocv.h` 就行了。
+
+
+## 支持平台
+
+`simpleocv` 其实目的就是做一个minimal替代opencv的东西，让你在任何终端都可以无痛使用opencv，也不需要更改你的应用c++代码，同时还能保持一定的opencv优化能力，例如图像resize等的速度。目前支持的平台：
+
+- macOS测试没有问题，x86, arm库都能编译；
+- windows下MSVC可以编译（但是ncnn版本会有些许的问题）；
+- wasm，webassembly端可以集成没有问题。
 
 
 

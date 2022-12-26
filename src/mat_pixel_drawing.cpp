@@ -13,10 +13,13 @@
 // specific language governing permissions and limitations under the License.
 
 #include "mat.h"
-
 #include <ctype.h>
 
 #include "platform.h"
+
+#if _MSC_VER
+#define NOMINMAX
+#endif
 
 namespace sim {
 
