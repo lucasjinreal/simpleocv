@@ -19,18 +19,17 @@ SimpleOCV尽可能秉承以下几个原则：
 ## 与其他库的对比
 
 
-
-| 平台          | OpenCV    | FlyCV            | opencv mobile | simpleocv     |
-| :-------------- | ----------- | :----------------- | :-------------- | --------------- |
-| Windows       | ✔️      | ❌               | ✔️          | ✔️          |
-| Windows(MSVC) | ✔️      | ❌               | ✔️          | ✔️          |
-| macOS         | ✔️      | ✔️             | ✔️          | ✔️          |
-| Linux         | ✔️      | ✔️             | ✔️          | ✔️          |
-| Webassembly   | -         | -                | -             | ✔️          |
-| Speed         | Fast      | FastMore         | Fast          | FastMore      |
-| Strength      | Compelete | Compelete & Fast | Light         | Simple & Easy |
-| Simplicity    |           |                  |               |               |
-| Dpendencies   | Many      | Many             | Less          | Zero          |
+| 平台          | OpenCV      | FlyCV            | opencv mobile | simpleocv         |
+| :-------------- | ------------- | :----------------- | :-------------- | ------------------- |
+| Windows       | ✔️        | ❌               | ✔️          | ✔️              |
+| Windows(MSVC) | ✔️        | ❌               | ✔️          | ✔️              |
+| macOS         | ✔️        | ✔️             | ✔️          | ✔️              |
+| Linux         | ✔️        | ✔️             | ✔️          | ✔️              |
+| Webassembly   | -           | -                | -             | ✔️              |
+| Speed         | Fast        | FastMore         | Fast          | FastMore          |
+| Strength      | Compelete   | Compelete & Fast | Light         | **Simple & Easy** |
+| Simplicity    | Complicated | Normal           | Complicated   | **Easiest**       |
+| Dpendencies   | Many        | Many             | Less          | **Zero**          |
 
 ## 交流群
 
@@ -116,6 +115,8 @@ make -j8
 
 - [ ] `cv::copyMarkBorder` 函数引入；
 - [ ] `cv::polyLines` 函数引入；
+- [ ] 将默认的resize bilinear切换到resize nearest；
+- [ ] 引入一些flycv的优化；
 
 ## 后续
 

@@ -427,6 +427,7 @@ NCNN_EXPORT void line(Mat &img, Point p0, Point p1, const Scalar &color,
 
 enum { FONT_HERSHEY_SIMPLEX = 0 };
 enum { LINE_AA = 8 };
+enum { INTER_NEAREST = 0, INTER_LINEAR = 1, INTER_CUBIC = 2, INTER_AREA = 3 };
 
 NCNN_EXPORT void putText(Mat &img, const std::string &text, Point org,
                          int fontFace, double fontScale, Scalar color,
