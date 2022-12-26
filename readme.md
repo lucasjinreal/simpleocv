@@ -16,6 +16,21 @@ SimpleOCV尽可能秉承以下几个原则：
 
 目的就是：对于不是很复杂的项目，彻底抛弃OpenCV，但是对于已有的项目，SimpleOCV的include接口，保持和OpenCV一模一样。
 
+## 与其他库的对比
+
+
+
+| 平台          | OpenCV    | FlyCV            | opencv mobile | simpleocv     |
+| :-------------- | ----------- | :----------------- | :-------------- | --------------- |
+| Windows       | ✔️      | ❌               | ✔️          | ✔️          |
+| Windows(MSVC) | ✔️      | ❌               | ✔️          | ✔️          |
+| macOS         | ✔️      | ✔️             | ✔️          | ✔️          |
+| Linux         | ✔️      | ✔️             | ✔️          | ✔️          |
+| Webassembly   | -         | -                | -             | ✔️          |
+| Speed         | Fast      | FastMore         | Fast          | FastMore      |
+| Strength      | Compelete | Compelete & Fast | Light         | Simple & Easy |
+| Simplicity    |           |                  |               |               |
+| Dpendencies   | Many      | Many             | Less          | Zero          |
 
 ## 交流群
 
@@ -26,7 +41,6 @@ SimpleOCV尽可能秉承以下几个原则：
 ## 更新
 
 - *`2022.12.26`*: 我增加了windows下的编译支持，现在可以直接编译一个windows .lib 静态库了，MSVC没有问题，这样你在大部分软件里面都可以直接集成，比opencv编译容易很多；
-
 
 ## 用法
 
@@ -58,11 +72,9 @@ int main(int argc, char **argv) {
 
 ![图片.png](https://s2.loli.net/2022/12/22/sMY7iRP4mJGNQKC.png)
 
-
 ## 高端用法
 
 SimpleOCV 最有用的还是集成到你的项目里，你可以把simpleocv作为一个3rd依赖，也可以手动的把编译出来的`libsimpleocv.a` 拷贝到你的链接目录，然后带上一个单一的头文件 `simpleocv.h` 就行了。
-
 
 ## 支持平台
 
@@ -72,13 +84,9 @@ SimpleOCV 最有用的还是集成到你的项目里，你可以把simpleocv作�
 - windows下MSVC可以编译（但是ncnn版本会有些许的问题）；
 - wasm，webassembly端可以集成没有问题。
 
-
-
 ## 贡献
 
 欢迎老铁们PR一些你用simpleocv实现的东西，例如画图，画box、画keypoints等等，然后写到 `examples/demo_xx.cc` 给我PR。感谢你。
-
-
 
 ## 编译
 
@@ -102,7 +110,6 @@ make -j8
 - 增加了 `cv::Mat::zeros` 等初始化空白Mat函数；
 - 增加了 `cv::LINE_AA` 等宏；
 
-
 ## 计划
 
 有些许的函数，其实可以添加进来的，这样可以让这个微型的替代版本更加鲁棒，感兴趣的可以PR：
@@ -110,14 +117,10 @@ make -j8
 - [ ] `cv::copyMarkBorder` 函数引入；
 - [ ] `cv::polyLines` 函数引入；
 
-
 ## 后续
 
 本项目旨在让你不依赖OpenCV，拥有基础的opencv能力，后续我会持续精简相关代码。并且尝试编译到其他平台，例如web，iOS等，这些平台你可以用SimploeOCV来做预处理，但是已经不需要opencv的依赖了。
 
-
-
 ## Copyright
 
 lucasjin && ncnn reserved.
-
