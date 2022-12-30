@@ -14,6 +14,20 @@ namespace sim {
 
 namespace mcv {
 
+// implementation here
+void resize_bilinear_c1(const unsigned char *src, int srcw, int srch,
+                        int srcstride, unsigned char *dst, int w, int h,
+                        int stride) {}
+
+void resize_bilinear_c2(const unsigned char *src, int srcw, int srch,
+                        int srcstride, unsigned char *dst, int w, int h,
+                        int stride) {}
+void resize_bilinear_c3(const unsigned char *src, int srcw, int srch,
+                        int srcstride, unsigned char *dst, int w, int h,
+                        int stride) {}
+void resize_bilinear_c4(const unsigned char *src, int srcw, int srch,
+                        int srcstride, unsigned char *dst, int w, int h,
+                        int stride) {}
 
 // Resize bilinear
 void resize_bilinear_c1(const unsigned char *src, int srcw, int srch,
@@ -36,20 +50,7 @@ void resize_bilinear_c4(const unsigned char *src, int srcw, int srch,
   return resize_bilinear_c4(src, srcw, srch, srcw * 4, dst, w, h, w * 4);
 }
 
-// implementation here
-void resize_bilinear_c1(const unsigned char *src, int srcw, int srch,
-                        int srcstride, unsigned char *dst, int w, int h,
-                        int stride) {}
 
-void resize_bilinear_c2(const unsigned char *src, int srcw, int srch,
-                        int srcstride, unsigned char *dst, int w, int h,
-                        int stride) {}
-void resize_bilinear_c3(const unsigned char *src, int srcw, int srch,
-                        int srcstride, unsigned char *dst, int w, int h,
-                        int stride) {}
-void resize_bilinear_c4(const unsigned char *src, int srcw, int srch,
-                        int srcstride, unsigned char *dst, int w, int h,
-                        int stride) {}
 
 // Resize nearest
 
