@@ -159,6 +159,7 @@ typedef Point_<float> Point2f;
 template <typename _Tp> struct Size_ {
   Size_() : width(0), height(0) {}
   Size_(_Tp _w, _Tp _h) : width(_w), height(_h) {}
+  Size_(_Tp _w, _Tp _h, _Tp _c) : width(_w), height(_h), channel(_c) {}
 
   template <typename _Tp2> operator Size_<_Tp2>() const {
     return Size_<_Tp2>(saturate_cast<_Tp2>(width), saturate_cast<_Tp2>(height));
@@ -166,6 +167,7 @@ template <typename _Tp> struct Size_ {
 
   _Tp width;
   _Tp height;
+  _Tp channel;
 };
 
 typedef Size_<int> Size;
@@ -346,7 +348,7 @@ struct NCNN_EXPORT Mat {
   bool empty() const { return data == 0 || total() == 0; }
 
   int channels() const { return c; }
-  cv::Scalar size() const { return cv::Scalar(cols, rows, c); }
+  cv::Size size() const { return cv::Size(cols, rows, c); }
 
   int type() const { return c; }
 
